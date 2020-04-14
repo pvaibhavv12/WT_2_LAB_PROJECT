@@ -334,8 +334,10 @@ def evaluate_question(validation_key):
             old_solved = a[0]
             print(old_solved)
     
-
-        new_solved = old_solved + "," + question
+        if question not in old_solved:
+            new_solved = old_solved + "," + question
+        else:
+            new_solved = old_solved
 
         query = "UPDATE user_table SET solved ='" + new_solved + "' where username ='"+ name_of_valid_user +"'"
         connection.execute(query)

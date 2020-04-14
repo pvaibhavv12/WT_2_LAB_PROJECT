@@ -8,6 +8,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+		<!-- Vue JS -->
+		<script src="{{ url_for('static', filename='vue.js') }}"></script>
+		<!-- Axios for AJAX -->
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
   </head>
@@ -68,38 +72,99 @@
 			})
 		</script>
     <p></p>
-		<article class="container">
+		<article class="container" id="questionId">
 			<div class="row">
 				<div id="question" class="col-sm-6">
-					<h3>Question Name</h3>
-					<p>Question Description/ Questino itself;Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error voluptatibus distinctio ad laudantium velit molestiae itaque eligendi eaque est, fugiat porro illum ullam harum, deserunt explicabo alias! Dolores, inventore ratione?Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error voluptatibus distinctio ad laudantium velit molestiae itaque eligendi eaque est, fugiat porro illum ullam harum, deserunt explicabo alias! Dolores, inventore ratione?Lorem ipsum, dolor sit amet consectetur adipisicing elit. Error voluptatibus distinctio ad laudantium velit molestiae itaque eligendi eaque est, fugiat porro illum ullam harum, deserunt explicabo alias! Dolores, inventore ratione?</p>
+					<h3 v-text='qDetails.name'></h3>
+					<p v-for="line in qDetails.question" v-text='line'></p>
 					<div class="container-fluid">
 						<div class="row">
 							<div class="col-sm-6">
 								<samp>Sample Input</samp>
-								<samp>
-									<div class="row">Line 1</div>
-									<div class="row">Line 1</div>
-									<div class="row">Line 1</div>
-								</samp>
+								<div>
+									<samp v-for="line in qDetails.sample_input">
+										<div class="row" v-text='line'></div>
+									</samp>
+								</div>
 							</div>
 							<div class="col-sm-6">
-								<smapl>Sample Output</smapl>
-								<samp>
-									<div class="row">Line 1</div>
-									<div class="row">Line 1</div>
-									<div class="row">Line 1</div>
-								</samp>
+								<samp>Sample Output</samp>
+								<div>
+									<samp v-for="line in qDetails.sample_output">
+										<div class="row" v-text='line'></div>
+									</samp>
+								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div class="col-sm-6">
-					<textarea id="code" class="md-textarea form-control" rows="20"></textarea><p></p>
-					<button type="submit" class="btn btn-success">Run</button>
+					<textarea id="code" class="md-textarea form-control" rows="20" v-model='code'></textarea><p></p>
+					<button type="submit" class="btn btn-success" @click="submitCode">Submit</button>
 				</div>
 			</div><p></p>
-			<div id="result"></div>
-    </article>
+			<div v-if="runDone">
+				<div v-if='parseInt(result[0]) != NaN' class="text-success">
+					Score is <div v-text='result'></div>
+				</div>
+				<div v-else class="text-danger">
+					<div v-text='result'></div>
+				</div>
+			</div>
+		</article>
+		<script>
+			questionApp = new Vue({
+				el: '#questionId',
+				data: {
+					qName: window.location.href.split('?')[1],
+					qDetails: {
+						name: null,
+						question: null,
+						sample_input: null,
+						sample_output: null
+					},
+					code: null,
+					result: null,
+					runDone: false
+				},
+				methods: {
+					getQuestionDetails: function() {
+						axios.get('/get_question_details/'+questionApp.qName+'/'+localStorage.token, {
+							params: {}
+						})
+						.then(function(response) {
+							if(typeof(response.data) != "object") {
+								alert(response.data)
+								if(localStorage.token)
+									localStorage.removeItem("token")
+								if(localStorage.username)
+									localStorage.removeItem("username")
+								location.replace('index.html')
+							}
+							else {
+								questionApp.qDetails.name = response.data.name
+								questionApp.qDetails.question = response.data.question.split('\n')
+								questionApp.qDetails.sample_input = response.data.sample_input.split('\n')
+								questionApp.qDetails.sample_output = response.data.sample_output.split('\n')
+							}
+						})
+					},
+					submitCode: function() {
+						questionApp.runDone = false
+						axios.get('/evaluate_question/'+localStorage.token, {
+							params: {
+								inputCode: questionApp.code,
+								question: questionApp.qDetails.name
+							}
+						})
+						.then(function (response) {
+							questionApp.result = response.data
+							questionApp.runDone = true
+						})
+					}
+				}
+			})
+			document.body.onload = questionApp.getQuestionDetails()
+		</script>
   </body>
 </html>

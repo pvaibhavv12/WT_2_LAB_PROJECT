@@ -1,1 +1,1 @@
-print("No\nYes\nNo\nYes\nYes")
+print('abb xyy')

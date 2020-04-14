@@ -15,7 +15,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
   </head>
-  <body onscroll="questionApp.predictiveFetchQuestion(questionApp.numQues)">
+  <body onload="questionApp.predictiveFetchQuestion()">
     <!-- Header: Changes here need to be done in all other files -->
 		<header class="page-header bg-light" id="headerId">
 			<nav class="navbar navbar-expand-sm bg-dark navbar-dark shrink-to-fit">
@@ -70,12 +70,13 @@
 					}
 				}
 			})
+			curr = window.scrollY;
 		</script>
     <p></p>
     <article>
 			<div id="questionListId" class="container">
 				<div v-for="q in questionsArray" class="card" style="font-size: 33px;">
-					<a v-bind:href="'/get_question_details/'+q+'/'+q_tok" v-text="q" class="card-body"></a>
+					<a v-bind:href="'/code.html?'+q" v-text="q" class="card-body"></a>
 				</div>
 			</div>
 		</article>
@@ -86,10 +87,11 @@
 					numQues: 0,
 					questionsArray: [],
 					q_tok: localStorage.token,
-					q_num: 0
+					q_num: 0,
+					timer: null
 				},
 				methods: {
-					predictiveFetchQuestion: function(n) {
+					predictiveFetchQuestion: function() {
 						axios.get('/list_all_questions/'+localStorage.token, {
 							params: {
 								quesNum: questionApp.numQues
@@ -102,10 +104,26 @@
 							}
 							questionApp.numQues = response.data.quesNum
 						})
+						.catch(function (e) {
+							clearTimeout(questionApp.timer)
+							document.body.removeEventListener("onscroll", questionApp.findStop)
+						})
+					},
+					findStop: function() {
+						if(questionApp.timer) {
+							clearTimeout(questionApp.timer)
+						}
+						questionApp.timer = setTimeout(questionApp.nextQuest, 500)
+					},
+					nextQuest: function() {
+						if(window.scrollY - curr > 1) {
+							questionApp.predictiveFetchQuestion()
+						}
+						curr = window.scrollY
 					}
 				}
 			})
-			questionApp.predictiveFetchQuestion(questionApp.numQues)
+			document.body.onscroll = questionApp.findStop
 		</script>
   </body>
 </html>
