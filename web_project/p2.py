@@ -1,1 +1,1 @@
-print('abb xyy')
+print('6')

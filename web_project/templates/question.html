@@ -15,7 +15,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
   </head>
-  <body onload="questionApp.predictiveFetchQuestion()">
+  <body onload="suggestApp.getSuggestions();questionApp.predictiveFetchQuestion()">
     <!-- Header: Changes here need to be done in all other files -->
 		<header class="page-header bg-light" id="headerId">
 			<nav class="navbar navbar-expand-sm bg-dark navbar-dark shrink-to-fit">
@@ -74,13 +74,36 @@
 		</script>
     <p></p>
     <article>
+			<div id="suggestId" class="container" v-if="suggestArray != []">
+				<h3 v-if="suggestArray.length != 0">Recommendation</h3>
+				<div v-for="q in suggestArray" class="card" style="font-size: 33px;">
+					<a v-bind:href="'/code.html?'+q" v-text="q" class="card-body"></a>
+				</div>
+			</div>
 			<div id="questionListId" class="container">
+				<h3>All Questions</h3>
 				<div v-for="q in questionsArray" class="card" style="font-size: 33px;">
 					<a v-bind:href="'/code.html?'+q" v-text="q" class="card-body"></a>
 				</div>
 			</div>
 		</article>
 		<script>
+			suggestApp = new Vue({
+				el: '#suggestId',
+				data: {
+					suggestArray: []
+				},
+				methods: {
+					getSuggestions: function() {
+						axios.get('/suggest_questions/'+localStorage.token, {
+							params: {}
+						})
+						.then(function(response) {
+							suggestApp.suggestArray = response.data.questions.split(',')
+						})
+					}
+				}
+			})
 			questionApp = new Vue({
 				el: '#questionListId',
 				data: {

@@ -103,14 +103,7 @@
 					<button type="submit" class="btn btn-success" @click="submitCode">Submit</button>
 				</div>
 			</div><p></p>
-			<div v-if="runDone">
-				<div v-if='parseInt(result[0]) != NaN' class="text-success">
-					Score is <div v-text='result'></div>
-				</div>
-				<div v-else class="text-danger">
-					<div v-text='result'></div>
-				</div>
-			</div>
+			<div v-if="runDone" class="text-danger" v-text='result'></div>
 		</article>
 		<script>
 			questionApp = new Vue({
@@ -160,6 +153,7 @@
 						.then(function (response) {
 							questionApp.result = response.data
 							questionApp.runDone = true
+							alert(response.data)
 						})
 					}
 				}
