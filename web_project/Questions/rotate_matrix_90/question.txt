@@ -1,0 +1,9 @@
+Given a square matrix, turn it by 90 degrees in anti-clockwise direction without using any extra space.
+
+Input :
+first line contain number of testcases
+nextline contain n where a matrix is n X n
+next contain matrix
+
+output:
+rotated matrix

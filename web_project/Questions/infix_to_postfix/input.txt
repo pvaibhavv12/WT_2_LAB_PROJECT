@@ -1,0 +1,11 @@
+10
+a+b*(c^d-e)^(f+g*h)-i
+A*(B+C)/D
+a*b*c+(a+r+b)^n*t-y
+a^2+b^2+2*a*b-v/l
+n*(n+p)/t*n*(n+q)*(n*n)/a
+u+f-a*a-s+d/f+f-g
+t*t-a+(a*s*c+s+v+a*t)^t
+a+s+v+s+s+s+s
+q/q*w-r+v-b*f/r
+(a+b+n*h)+(a-s*f^h)*(a)^(b+g-r)*(a-s+c/g)/(j^f)-(h+f+g)

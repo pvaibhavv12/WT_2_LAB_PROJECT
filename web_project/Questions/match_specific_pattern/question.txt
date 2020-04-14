@@ -1,0 +1,7 @@
+Given a dictionary of words and a pattern. Every character in the pattern is uniquely mapped to a character in the dictionary. The task is to complete a function findMatchedWords(dict,pattern) that returns a vector of strings matching with given pattern. The function takes two argument the first argument is an array of strings dict which denote the dictionary and the second argument is the pattern to match.
+
+Input:
+The first line of input contains an integer T denoting the number of test cases. Each testcase contains 3 lines. The first line contains an integer N denoting the number of strings in the dictionary,second line N space separated strings denoting the strings of the dictionary. The third line contains pattern.
+
+Output:
+The output for each test case will be the space separated strings that matches the given pattern in lexicographical order.

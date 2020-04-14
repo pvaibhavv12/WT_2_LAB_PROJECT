@@ -1,0 +1,18 @@
+Completed:
+    Login (REST)
+    Resister (REST)
+    Generate Validation Key
+
+
+
+
+To do:
+
+    (All of these using REST)
+    Coding Page
+    Check Results
+    Progress Page
+
+key = null
+sign in
+

@@ -1,0 +1,14 @@
+Given a Queue consisting of first n natural numbers (in random order). The task is to check whether the given Queue elements can be arranged in increasing order in another Queue using a stack. The operation allowed are:
+1. Push and pop elements from the stack
+2. Pop (Or enqueue) from the given Queue.
+3. Push (Or Dequeue) in the another Queue.
+
+Input:
+
+Number of test cases
+n number of elements in Queue
+all the elements present in Queue
+
+Output:
+
+"Yes" if queue can be sorted else "No"

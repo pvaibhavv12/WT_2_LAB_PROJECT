@@ -1,0 +1,10 @@
+Pangram is a sentence containing every letter in the English alphabet. Given a string, find all characters that are missing from the string, i.e., the characters that can make string a Pangram. We need to print output in alphabetic order.
+
+Input:
+
+Number of testCases:
+string
+
+Output:
+
+single line of required char

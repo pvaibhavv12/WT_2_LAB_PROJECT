@@ -1,0 +1,9 @@
+Given a string, check if all the characters of the string are same or not.
+
+Input:
+
+Number of testcases
+string
+
+Output:
+"Yes" or "No" bases on question

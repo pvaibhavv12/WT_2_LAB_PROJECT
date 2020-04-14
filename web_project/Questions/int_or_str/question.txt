@@ -1,0 +1,8 @@
+Write a function to check whether a given input is an integer or a string.
+
+Input:
+Number of testCases:
+number or string
+
+Output:
+integet if input is integet else string

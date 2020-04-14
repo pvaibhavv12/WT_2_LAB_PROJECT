@@ -1,0 +1,183 @@
+<!-- Line: 61: Replace action to corresponding URL to register new user -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+		<!-- Vue JS -->
+		<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+		<!-- Axios for AJAX -->
+		<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <!-- Custom CSS -->
+		<link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
+		
+		<!-- Custom JS -->
+		<script src="{{ url_for('static', filename='register.js') }}"></script>
+  </head>
+  <body>
+    <!-- Header: Changes here need to be done in all other files -->
+		<header class="page-header bg-light" id="headerId">
+			<nav class="navbar navbar-expand-sm bg-dark navbar-dark shrink-to-fit">
+        <a class="navbar-brand" href="index.html">
+					<div class="container">
+						<div class="row">
+							<div class="col-xs-6">
+								<img class="logo rounded" src="{{ url_for('static', filename='logo.jpg') }}" alt="logo-coder">
+							</div>
+							<div class="col-xs-4">
+								&nbsp;&nbsp;
+							</div>
+							<div class="col-xs-6">
+								<h3 class="navbar-dark bg-dark text-light">Online Coding Platform</h3>
+							</div>
+							<div class="nav-item" v-if="typeof(guest) == 'string'">
+								<label class="nav-link" v-text="user"></label>
+							</div>
+						</div>
+					</div>
+        </a>
+				<ul class="navbar-nav ml-auto">
+					<li class="nav-item">
+						<a class="nav-link" href="index.html">Home</a>
+					</li>
+					<li class="nav-item" v-if="typeof(guest) == 'undefined'">
+						<a class="nav-link" href="login.html">Login</a>
+					</li>
+					<li class="nav-item" v-if="typeof(guest) == 'undefined'">
+						<a class="nav-link" href="register.html">Register</a>
+					</li>
+					<li class="nav-item" v-if="typeof(guest) == 'string'">
+						<a class="nav-link" href="question.html">Practice</a>
+					</li>
+					<li class="nav-item" v-if="typeof(guest) == 'string'">
+						<a class="nav-link" href="index.html" @click='signOut'>Sign out</a>
+					</li>
+				</ul>
+			</nav>
+		</header>
+		<script>
+			headerApp = new Vue({
+				el: '#headerId',
+				data: {
+					guest: localStorage.token,
+					user: "Hi "+localStorage.username+"!"
+				},
+				methods: {
+					signOut: function() {
+						localStorage.removeItem("token")
+						localStorage.removeItem("username")
+					}
+				}
+			})
+		</script>
+    <p></p>
+		<!-- Content -->
+		<article>
+			<div class="container">
+				<form @submit="validateForm" id="registerFormId">
+					<table>
+						<tr v-if="errors.length">
+							<td class="text-danger">
+								<label>Please resolve the following errors and try again:</label>
+								<ul>
+									<li v-for="error in errors" v-text='error'></li>
+								</ul>
+							</td>
+						</tr>
+						<tr v-if="errors.length">
+							<td>
+								<hr>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="name" class="form-inline">
+									Name:&nbsp;
+								</label>
+							</td>
+							<td>
+								<label for="nameInput" class="form-inline">
+									<input type="text" id="name" name="name" placeholder="Enter Name" class="form-control" v-model="nameInputText">&nbsp;
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="email" class="form-inline">
+									Email:&nbsp;
+								</label>
+							</td>
+							<td>
+								<label for="emailInput" class="form-inline">
+									<input type="email" id="email" name="email" placeholder="Enter Email" class="form-control" v-model="emailInputText">
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<hr>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="userName" class="form-inline">
+									Username:&nbsp;
+								</label>
+							</td>
+							<td>
+								<label for="userNameInput" class="form-inline">
+									<input type="text" id="userName" name="userName" placeholder="Enter Username" class="form-control" v-model="userNameInputText">
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="userPass" class="form-inline">
+									Password:&nbsp;&nbsp;
+								</label>
+							</td>
+							<td>
+								<label for="userPassInput" class="form-inline">
+									<input type="password" id="userPass" name="userPass" placeholder="Enter Password" class="form-control" v-model="userPassInputText">
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="userPassCnf" class="form-inline">
+									Confirm Password:&nbsp;&nbsp;
+								</label>
+							</td>
+							<td>
+								<label for="userPassInputCnf" class="form-inline">
+									<input type="password" id="userPassCnf" name="userPassCnf" placeholder="Re-enter Password" class="form-control" v-model="userPassInputCnfText">
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<label for="submit" class="form-inline">
+									<button type="submit" class="btn btn-primary">Register</button>
+								</label>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								<hr>
+							</td>
+						</tr>
+					</table>
+					<div v-if="regSuccess" v-text="msgSuccess" v-bind:class="{'text-success': regDone, 'text-danger': regFail}"></div>
+				</form>
+				<div>
+					<label>Exisiting User ? Sign in <a href="login.html">here!</a></label>
+				</div>
+			</div>
+		</article>
+  </body>
+</html>

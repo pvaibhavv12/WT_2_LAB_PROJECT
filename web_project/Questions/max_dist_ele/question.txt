@@ -1,0 +1,7 @@
+Given an array containing N elements. The task is to find maximum number of distinct elements after removing K elements from the array.
+
+Input:
+The first line of input contains an integer T denoting the number of test cases. Then T test cases follow. Each test case consists of two lines. First line of each test case contains two Integers N and K and the second line contains N space separated elements.
+
+Output:
+For each test case, print the maximum distinct elements after removing K elements in new line.

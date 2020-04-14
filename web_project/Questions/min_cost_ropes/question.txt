@@ -1,0 +1,7 @@
+There are given N ropes of different lengths, we need to connect these ropes into one rope. The cost to connect two ropes is equal to sum of their lengths. The task is to connect the ropes with minimum cost.
+
+Input:
+The first line of input contains an integer T denoting the number of test cases. The first line of each test case is N where N is the number of ropes. The second line of each test case contains N input L[i],length of ropes.
+
+Output:
+For each testcase, print the minimum cost to connect all the ropes.

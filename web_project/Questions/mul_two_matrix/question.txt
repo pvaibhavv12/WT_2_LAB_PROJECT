@@ -1,0 +1,8 @@
+Given two square Matrices A[][] and B[][]. Your task is to complete the function multiply which stores the multiplied matrices in a new matrix C[][].
+
+Input:
+
+The first line of input contains an integer T denoting the number of test cases. Then T test cases follow. Each test case contains an integer N denoting the size of the squarematrix . Then in the next two lines are N*N space separated values of the matrix A[][] and B[][].
+
+Output:
+For each test case in a new line output will be the space separated values of the matrix C[][].

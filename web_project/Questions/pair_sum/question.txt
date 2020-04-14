@@ -1,0 +1,7 @@
+Write a program that, given an array A[] of n numbers and another number x, determines whether or not there exist two elements in S whose sum is exactly x.
+
+Input:
+The first line of input contains an integer T denoting the number of test cases. The first line of each test case is N and X, N is the size of array. The second line of each test case contains N integers representing array elements A[i].
+
+Output:
+Print "Yes" if there exist two elements in A whose sum is exactly X, else "No" (without quotes).

@@ -1,0 +1,7 @@
+Given an expression exp of length n consisting of some brackets. The task is to print the bracket numbers when the expression is being parsed.
+
+Input:
+The first line contains an integer T, the number of test cases. For each test case, there is a string exp containing the expression.
+
+Output:
+For each test case, the output is the bracket numbers of the expression.

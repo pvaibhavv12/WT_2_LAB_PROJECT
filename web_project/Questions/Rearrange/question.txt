@@ -1,0 +1,7 @@
+Given an array of integers, task is to print the array in the order – smallest number, Largest number, 2nd smallest number, 2nd largest number, 3rd smallest number, 3rd largest number and so on..
+
+Input:
+The first line consists of an integer T i.e number of test cases. The first line of each test case consists of an integer N.The next line consists of N spaced integers.
+
+Output:
+Print the required answer.
