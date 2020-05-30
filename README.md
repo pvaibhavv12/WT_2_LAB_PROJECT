@@ -17,6 +17,6 @@ In case of issues, delete the users.db file and run: python create_database.py<b
 The flask app runs in development mode, and must be made production ready before deployment.<br/><br/>
 
 Contact:<br/>
-  Vaibhab V Pawar  pvaibhavv12@gmail.com<br/>
+  Vaibhav V Pawar  pvaibhavv12@gmail.com<br/>
   S Thejas     s.thejas99@gmail.com<br/>
   Ramakrishnan k.ramakrishnan10@gmail.com<br/>
